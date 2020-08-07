@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Checkout.Kata.Models;
 
 namespace Checkout.Kata
 {
@@ -39,6 +40,11 @@ namespace Checkout.Kata
                 throw new NullReferenceException();
 
             Basket.Add(item);
+        }
+
+        public void AddDiscount(Discount discount)
+        {
+            throw new NotImplementedException();
         }
     }
 }

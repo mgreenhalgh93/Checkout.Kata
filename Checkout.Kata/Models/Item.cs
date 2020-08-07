@@ -1,4 +1,4 @@
-﻿namespace Checkout.Kata
+﻿namespace Checkout.Kata.Models
 {
     public class Item
     {

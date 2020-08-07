@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Checkout.Kata.Models;
 using Xunit;
 
 namespace Checkout.Kata.Test
@@ -102,6 +103,25 @@ namespace Checkout.Kata.Test
 
             //Act & Assert
             Assert.Throws<NullReferenceException>(() => _checkout.Scan(_items));
+        }
+
+        [Fact]
+        public void GivenDiscountIsAppliedToItemCorrectTotalIsReturned()
+        {
+            //Arrange
+            var discount = new Discount { Sku = "B", Quantity = 3, Value = 40m };
+            _items.Add(new Item { Sku = "B", Price = 15m });
+            _items.Add(new Item { Sku = "B", Price = 15m });
+            _items.Add(new Item { Sku = "B", Price = 15m });
+
+            //Act
+            _checkout.AddDiscount(discount);
+            _checkout.Scan(_items);
+
+            var result = _checkout.Total();
+
+            //Arrange
+            Assert.Equal(40m, result);
         }
     }
 }
