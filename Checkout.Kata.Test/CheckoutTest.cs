@@ -94,5 +94,14 @@ namespace Checkout.Kata.Test
             //Arrange
             Assert.Equal(50m, result);
         }
+
+        [Fact]
+        public void ItemsListEmptyThrowsNullExceptionWhenReturningResult()
+        {
+            //Arrange
+
+            //Act & Assert
+            Assert.Throws<NullReferenceException>(() => _checkout.Scan(_items));
+        }
     }
 }
