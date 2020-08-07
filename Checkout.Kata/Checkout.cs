@@ -75,7 +75,7 @@ namespace Checkout.Kata
                     remainingItems[i].Discounted = true;
                 }
 
-                remainingItems[0].Price = discount.Value;
+                remainingItems[0].Price = discount.Value.Value;
             }
         }
 

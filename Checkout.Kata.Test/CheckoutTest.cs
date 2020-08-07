@@ -134,5 +134,23 @@ namespace Checkout.Kata.Test
             //Act & Assert
             Assert.Throws<NullReferenceException>(() => _checkout.AddDiscounts(null));
         }
+
+        [Fact]
+        public void GivenPercentageBasedDiscountIsAppliedCorrectTotalIsReturned()
+        {
+            //Arrange
+            _discounts.Add(new Discount { Sku = "D", Quantity = 2, Value = null, Percentage = 25 });
+            _items.Add(new Item { Sku = "D", Price = 55m });
+            _items.Add(new Item { Sku = "D", Price = 55m });
+
+            //Act
+            _checkout.AddDiscounts(_discounts);
+            _checkout.Scan(_items);
+
+            var result = _checkout.Total();
+
+            //Arrange
+            Assert.Equal(27.5m, result);
+        }
     }
 }
