@@ -10,15 +10,18 @@ namespace Checkout.Kata
         public Checkout()
         {
             Basket = new List<Item>();
+            Discounts = new List<Discount>();
         }
 
-        public List<Item> Basket { get; set; }
+        public List<Item> Basket { get; private set; }
+        public List<Discount> Discounts { get; private set; }
 
         public decimal Total()
         {
             if(Basket != null && !Basket.Any())
                 throw new NullReferenceException();
 
+            CalculateTotal();
             return Basket.Sum(p => p.Price);
         }
 
@@ -44,7 +47,36 @@ namespace Checkout.Kata
 
         public void AddDiscount(Discount discount)
         {
-            throw new NotImplementedException();
+            Discounts.Add(discount);
+        }
+
+        private void CalculateTotal()
+        {
+            foreach(var discount in Discounts)
+            {
+                ApplyDiscount(discount);
+            }
+        }
+
+        private void ApplyDiscount(Discount discount)
+        {
+            while(DiscountItems(discount).Count >= discount.Quantity)
+            {
+                var remainingItems = DiscountItems(discount);
+
+                for (int i = 0; i < discount.Quantity; i++)
+                {
+                    remainingItems[i].Price = 0m;
+                    remainingItems[i].Discounted = true;
+                }
+
+                remainingItems[0].Price = discount.Value;
+            }
+        }
+
+        private List<Item> DiscountItems(Discount discount)
+        {
+            return Basket.FindAll(i => i.Sku == discount.Sku && !i.Discounted);
         }
     }
 }
