@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Checkout.Kata
 {
@@ -11,7 +12,11 @@ namespace Checkout.Kata
         }
 
         public List<Item> Basket { get; set; }
-        public decimal Total { get; set; }
+
+        public decimal Total()
+        {
+            return Basket.Sum(p => p.Price);
+        }
 
         public void Scan(Item item)
         {

@@ -62,7 +62,7 @@ namespace Checkout.Kata.Test
             //Act
             _checkout.Scan(item);
 
-            var result = _checkout.Total;
+            var result = _checkout.Total();
 
             //Arrange
             Assert.Equal(10m, result);
