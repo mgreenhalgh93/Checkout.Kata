@@ -47,6 +47,9 @@ namespace Checkout.Kata
 
         public void AddDiscount(Discount discount)
         {
+            if (discount == null)
+                throw new NullReferenceException();
+
             Discounts.Add(discount);
         }
 
