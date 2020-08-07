@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Checkout.Kata.Test
@@ -6,20 +7,22 @@ namespace Checkout.Kata.Test
     public class CheckoutTest
     {
         private readonly Checkout _checkout;
+        private readonly List<Item> _items;
 
         public CheckoutTest()
         {
             _checkout = new Checkout();
+            _items = new List<Item>();
         }
 
         [Fact]
         public void ItemScannedShowsInBasketTotal()
         {
             //Arrange
-            var item = new Item();
+            _items.Add(new Item());
 
             //Act
-            _checkout.Scan(item);
+            _checkout.Scan(_items);
 
             var result = _checkout.Basket.Count;
 
@@ -40,12 +43,11 @@ namespace Checkout.Kata.Test
         public void MultipleScannedItemsReturnsBasketTotal()
         {
             //Arrange
-            var item1 = new Item();
-            var item2 = new Item();
+            _items.Add(new Item());
+            _items.Add(new Item());
 
             //Act
-            _checkout.Scan(item1);
-            _checkout.Scan(item2);
+            _checkout.Scan(_items);
 
             var result = _checkout.Basket.Count;
 
@@ -57,10 +59,10 @@ namespace Checkout.Kata.Test
         public void ItemAddedToBasketReturnsCorrectTotal()
         {
             //Arrange
-            var item = new Item { Sku = "A", Price = 10m };
+            _items.Add( new Item { Sku = "A", Price = 10m });
 
             //Act
-            _checkout.Scan(item);
+            _checkout.Scan(_items);
 
             var result = _checkout.Total();
 
@@ -81,12 +83,11 @@ namespace Checkout.Kata.Test
         public void MultipleItemsAddedToBasketReturnsCorrectTotal()
         {
             //Arrange
-            var itemA = new Item { Sku = "A", Price = 10m };
-            var itemC = new Item { Sku = "C", Price = 40m };
+            _items.Add(new Item { Sku = "A", Price = 10m });
+            _items.Add(new Item { Sku = "C", Price = 40m });
 
             //Act
-            _checkout.Scan(itemA);
-            _checkout.Scan(itemC);
+            _checkout.Scan(_items);
 
             var result = _checkout.Total();
 

@@ -21,7 +21,15 @@ namespace Checkout.Kata
             return Basket.Sum(p => p.Price);
         }
 
-        public void Scan(Item item)
+        public void Scan(List<Item> items)
+        {
+            foreach(Item i in items)
+            {
+                Scan(i);
+            }
+        }
+
+        private void Scan(Item item)
         {
             if (item == null)
                 throw new NullReferenceException();
