@@ -7,13 +7,14 @@ namespace Checkout.Kata
     {
         public Checkout()
         {
+            Basket = new List<Item>();
         }
 
         public List<Item> Basket { get; set; }
 
         public void Scan(Item item)
         {
-            throw new NotImplementedException();
+            Basket.Add(item);
         }
     }
 }
