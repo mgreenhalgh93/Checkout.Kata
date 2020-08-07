@@ -14,6 +14,9 @@ namespace Checkout.Kata
 
         public void Scan(Item item)
         {
+            if (item == null)
+                throw new NullReferenceException();
+
             Basket.Add(item);
         }
     }
