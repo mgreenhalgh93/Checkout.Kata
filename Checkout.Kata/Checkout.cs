@@ -11,6 +11,7 @@ namespace Checkout.Kata
         }
 
         public List<Item> Basket { get; set; }
+        public decimal Total { get; set; }
 
         public void Scan(Item item)
         {

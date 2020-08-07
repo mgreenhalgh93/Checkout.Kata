@@ -52,5 +52,20 @@ namespace Checkout.Kata.Test
             //Assert
             Assert.Equal(2, result);
         }
+
+        [Fact]
+        public void ItemAddedToBasketReturnsCorrectTotal()
+        {
+            //Arrange
+            var item = new Item { Sku = "A", Price = 10m };
+
+            //Act
+            _checkout.Scan(item);
+
+            var result = _checkout.Total;
+
+            //Arrange
+            Assert.Equal(10m, result);
+        }
     }
 }
