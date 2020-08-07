@@ -123,5 +123,14 @@ namespace Checkout.Kata.Test
             //Arrange
             Assert.Equal(40m, result);
         }
+
+        [Fact]
+        public void DiscountEmptyThrowsNullExceptionWhenTryingToAdd()
+        {
+            //Arrange
+
+            //Act & Assert
+            Assert.Throws<NullReferenceException>(() => _checkout.AddDiscount(null));
+        }
     }
 }
