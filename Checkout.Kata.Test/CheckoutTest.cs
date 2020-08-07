@@ -35,5 +35,22 @@ namespace Checkout.Kata.Test
             //Act & Assert
             Assert.Throws<NullReferenceException>(() => _checkout.Scan(null));
         }
+
+        [Fact]
+        public void MultipleScannedItemsReturnsBasketTotal()
+        {
+            //Arrange
+            var item1 = new Item();
+            var item2 = new Item();
+
+            //Act
+            _checkout.Scan(item1);
+            _checkout.Scan(item2);
+
+            var result = _checkout.Basket.Count;
+
+            //Assert
+            Assert.Equal(2, result);
+        }
     }
 }
