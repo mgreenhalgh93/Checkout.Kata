@@ -9,11 +9,13 @@ namespace Checkout.Kata.Test
     {
         private readonly Checkout _checkout;
         private readonly List<Item> _items;
+        private readonly List<Discount> _discounts;
 
         public CheckoutTest()
         {
             _checkout = new Checkout();
             _items = new List<Item>();
+            _discounts = new List<Discount>();
         }
 
         [Fact]
@@ -109,13 +111,13 @@ namespace Checkout.Kata.Test
         public void GivenDiscountIsAppliedToItemCorrectTotalIsReturned()
         {
             //Arrange
-            var discount = new Discount { Sku = "B", Quantity = 3, Value = 40m };
+            _discounts.Add(new Discount { Sku = "B", Quantity = 3, Value = 40m });
             _items.Add(new Item { Sku = "B", Price = 15m });
             _items.Add(new Item { Sku = "B", Price = 15m });
             _items.Add(new Item { Sku = "B", Price = 15m });
 
             //Act
-            _checkout.AddDiscount(discount);
+            _checkout.AddDiscounts(_discounts);
             _checkout.Scan(_items);
 
             var result = _checkout.Total();
@@ -130,7 +132,7 @@ namespace Checkout.Kata.Test
             //Arrange
 
             //Act & Assert
-            Assert.Throws<NullReferenceException>(() => _checkout.AddDiscount(null));
+            Assert.Throws<NullReferenceException>(() => _checkout.AddDiscounts(null));
         }
     }
 }

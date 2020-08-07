@@ -27,7 +27,6 @@ namespace Checkout.Kata
 
         public void Scan(List<Item> items)
         {
-
             if (items != null && !items.Any())
                 throw new NullReferenceException();
 
@@ -45,12 +44,15 @@ namespace Checkout.Kata
             Basket.Add(item);
         }
 
-        public void AddDiscount(Discount discount)
+        public void AddDiscounts(List<Discount> discounts)
         {
-            if (discount == null)
+            if (discounts != null && !discounts.Any())
                 throw new NullReferenceException();
 
-            Discounts.Add(discount);
+            foreach (Discount i in discounts)
+            {
+                AddDiscount(i);
+            }
         }
 
         private void CalculateTotal()
@@ -77,9 +79,19 @@ namespace Checkout.Kata
             }
         }
 
+        private void AddDiscount(Discount discount)
+        {
+            if (discount == null)
+                throw new NullReferenceException();
+
+            Discounts.Add(discount);
+        }
+
         private List<Item> DiscountItems(Discount discount)
         {
             return Basket.FindAll(i => i.Sku == discount.Sku && !i.Discounted);
         }
+
+ 
     }
 }
