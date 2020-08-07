@@ -59,24 +59,45 @@ namespace Checkout.Kata
         {
             foreach(var discount in Discounts)
             {
-                ApplyDiscount(discount);
+                if (!discount.Value.HasValue)
+                    ApplyPercentageBasedDiscount(discount);
+                else
+                    ApplyValueBasedDiscount(discount);
             }
         }
 
-        private void ApplyDiscount(Discount discount)
+        private void ApplyPercentageBasedDiscount(Discount discount)
+        {
+            var currentPriceSum = DiscountItems(discount).Sum(p => p.Price);
+
+            while (DiscountItems(discount).Count >= discount.Quantity)
+            {
+                List<Item> remainingItems = ApplyDiscount(discount);
+                var newValue = (currentPriceSum / 100) * discount.Percentage;
+                remainingItems[0].Price = (decimal)newValue;
+            }
+        }
+
+        private void ApplyValueBasedDiscount(Discount discount)
         {
             while(DiscountItems(discount).Count >= discount.Quantity)
             {
-                var remainingItems = DiscountItems(discount);
-
-                for (int i = 0; i < discount.Quantity; i++)
-                {
-                    remainingItems[i].Price = 0m;
-                    remainingItems[i].Discounted = true;
-                }
-
+                List<Item> remainingItems = ApplyDiscount(discount);
                 remainingItems[0].Price = discount.Value.Value;
             }
+        }
+
+        private List<Item> ApplyDiscount(Discount discount)
+        {
+            var remainingItems = DiscountItems(discount);
+
+            for (int i = 0; i < discount.Quantity; i++)
+            {
+                remainingItems[i].Price = 0m;
+                remainingItems[i].Discounted = true;
+            }
+
+            return remainingItems;
         }
 
         private void AddDiscount(Discount discount)
@@ -90,8 +111,6 @@ namespace Checkout.Kata
         private List<Item> DiscountItems(Discount discount)
         {
             return Basket.FindAll(i => i.Sku == discount.Sku && !i.Discounted);
-        }
-
- 
+        } 
     }
 }
