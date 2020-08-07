@@ -15,6 +15,9 @@ namespace Checkout.Kata
 
         public decimal Total()
         {
+            if(Basket != null && !Basket.Any())
+                throw new NullReferenceException();
+
             return Basket.Sum(p => p.Price);
         }
 
