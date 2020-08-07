@@ -20,5 +20,15 @@ namespace Checkout.Kata.Test
             //Assert
             Assert.Equal(1, result);
         }
+
+        [Fact]
+        public void IfItemIsNullThrowsException()
+        {
+            //Arrange
+            var checkout = new Checkout();
+
+            //Act & Assert
+            Assert.Throws<NullReferenceException>(() => checkout.Scan(null));
+        }
     }
 }
