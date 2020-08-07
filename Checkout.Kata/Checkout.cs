@@ -23,7 +23,11 @@ namespace Checkout.Kata
 
         public void Scan(List<Item> items)
         {
-            foreach(Item i in items)
+
+            if (items != null && !items.Any())
+                throw new NullReferenceException();
+
+            foreach (Item i in items)
             {
                 Scan(i);
             }
